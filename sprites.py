@@ -2,7 +2,7 @@ import pygame
 
 
 # Sprite Settings
-ANIMATION_SPEED = 1
+ANIMATION_SPEED = 0.5
 
 
 class Sprite(pygame.sprite.Sprite):
@@ -10,21 +10,20 @@ class Sprite(pygame.sprite.Sprite):
         # noinspection PyTypeChecker
         super().__init__(groups)
 
-        self.game = game
         self.img = img
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect = self.img.get_rect()
+        self.rect.center = pos
 
     def draw(self, screen):
-        screen.blit(self.img, self)
+        screen.blit(self.img, self.rect)
 
-    def update(self):
+    def update(self, dt):
         pass
 
 
 class AnimatedSprite(Sprite):
     def __init__(self, pos, frames, groups):
-        super().__init__(pos, img, groups)
+        super().__init__(pos, frames[0], groups)
 
         self.frames, self.frame_index = frames, 0
 

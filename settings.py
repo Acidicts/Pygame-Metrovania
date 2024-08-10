@@ -8,4 +8,4 @@ from pygame.math import Vector2
 WIDTH, HEIGHT = 1024, 720
 TILE_SIZE = 32
 
-
+SCALE = 4
