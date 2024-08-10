@@ -2,7 +2,7 @@ import pygame
 
 
 # Sprite Settings
-ANIMATION_SPEED = 0.5
+ANIMATION_SPEED = 1
 
 
 class Sprite(pygame.sprite.Sprite):
@@ -13,12 +13,13 @@ class Sprite(pygame.sprite.Sprite):
         self.img = img
         self.rect = self.img.get_rect()
         self.rect.center = pos
+        self.old_rect = self.rect.copy()
 
     def draw(self, screen):
         screen.blit(self.img, self.rect)
 
     def update(self, dt):
-        pass
+        self.old_rect = self.rect.copy()
 
 
 class AnimatedSprite(Sprite):
@@ -33,3 +34,4 @@ class AnimatedSprite(Sprite):
 
     def update(self, dt):
         self.animate(dt)
+        self.old_rect = self.rect.copy()
