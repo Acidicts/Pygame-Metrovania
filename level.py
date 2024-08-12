@@ -16,7 +16,7 @@ class Level:
 
         self.colliders = self.setup()
 
-        self.player = Player((200, 350), load_spritesheet('assets/sprites/u.png', 7, 9, 0), self.all_sprites, self.colliders)
+        self.player = Player((500, 500), load_spritesheet('assets/sprites/u.png', 8, 9, 0), self.all_sprites, self.colliders)
 
     def setup(self):
         colliders = []

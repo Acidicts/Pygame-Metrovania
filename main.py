@@ -40,7 +40,7 @@ class Game:
 
             self.screen.blit(self.background, (0, 0))
 
-            self.all_sprites.update(dt)
+            self.all_sprites.update(dt, self.level.player)
             self.all_sprites.draw(self.screen)
 
             pygame.display.update()

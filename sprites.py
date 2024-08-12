@@ -15,9 +15,6 @@ class Sprite(pygame.sprite.Sprite):
         self.rect.center = pos
         self.old_rect = self.rect.copy()
 
-    def draw(self, screen):
-        screen.blit(self.img, self.rect)
-
     def update(self, dt):
         self.old_rect = self.rect.copy()
 
