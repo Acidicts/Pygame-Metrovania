@@ -21,18 +21,36 @@ class Level:
         for layer in self.level['layers']:
             if layer['name'] == 'colliders':
                 for collider in layer['objects']:
-                    if not collider['type'] == 'passthrough':
-                        colliders.append(Collider(collider['width'] * SCALE,
-                                                  collider['height'] * SCALE,
-                                                  collider['x'] * SCALE,
-                                                  collider['y'] * SCALE
-                                                  ))
+                    poly = False
+                    try:
+                        if collider['polygon']:
+                            poly = True
+                        else:
+                            poly = False
+                    except KeyError:
+                        poly = False
+
+                    if poly:
+                        points = []
+                        for point in collider['polygon']:
+                            points.append((point['x'] * SCALE, point['y'] * SCALE))
+                        colliders.append(Collider(collider['width'] * SCALE, collider['height'] * SCALE, 0, 0, points))
+
                     else:
-                        colliders.append(SemiCollider(collider['width'] * SCALE,
+                        if not collider['type'] == 'passthrough':
+                            colliders.append(Collider(collider['width'] * SCALE,
                                                       collider['height'] * SCALE,
                                                       collider['x'] * SCALE,
-                                                      collider['y'] * SCALE,
-                                                      self.platforms
+                                                      collider['y'] * SCALE
                                                       ))
+
+                        else:
+                            # noinspection PyTypeChecker
+                            colliders.append(SemiCollider(collider['width'] * SCALE,
+                                                          collider['height'] * SCALE,
+                                                          collider['x'] * SCALE,
+                                                          collider['y'] * SCALE,
+                                                          self.platforms
+                                                          ))
 
         return colliders

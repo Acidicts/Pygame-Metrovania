@@ -25,6 +25,16 @@ class AllSprites(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - self.display.get_width() // 2
         self.offset.y = player.rect.centery - self.display.get_height() // 2
 
+        if self.offset.x < 0:
+            self.offset.x = 0
+        elif self.offset.x > self.background.get_width() - self.display.get_width():
+            self.offset.x = self.background.get_width() - self.display.get_width()
+
+        if self.offset.y < 0:
+            self.offset.y = 0
+        elif self.offset.y > self.background.get_height() - self.display.get_height():
+            self.offset.y = self.background.get_height() - self.display.get_height()
+
         for sprite in self.sprites():
             sprite.update(dt)
 
