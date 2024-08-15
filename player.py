@@ -3,6 +3,7 @@ from pygame import Vector2
 
 from sprites import AnimatedSprite
 from support import scale_list, Timer
+from colliders import Collider
 
 
 class Player(AnimatedSprite):
@@ -41,7 +42,7 @@ class Player(AnimatedSprite):
                         collide = True
 
                 if axis == 'y':
-                    if self.hitbox.top <= sprite.rect.bottom and int(self.old_rect.top) >= int(sprite.old_rect.bottom):
+                    if self.hitbox.top <= sprite.rect.bottom and int(self.old_rect.top) >= int(sprite.old_rect.bottom) and type(sprite) == Collider:
                         self.hitbox.top = sprite.rect.bottom
                         self.direction.y = 0
                         collide = True
@@ -70,7 +71,7 @@ class Player(AnimatedSprite):
 
         if keys[pygame.K_SPACE] and self.collide_faces['bottom']:
             self.hitbox.y -= 5
-            self.direction.y = -27
+            self.direction.y = -22
             self.timers['jump'].activate()
 
         if not self.collide_faces['bottom']:
@@ -81,9 +82,6 @@ class Player(AnimatedSprite):
     def update(self, dt):
         self.animate(dt)
         win = pygame.display.get_surface()
-
-        pygame.draw.rect(win, self.gravity, self.hitbox, 1)
-        pygame.draw.rect(win, (0, 255, 0), self.rect, 1)
 
         self.input(dt)
         self.get_collide_faces()
@@ -98,8 +96,5 @@ class Player(AnimatedSprite):
 
         for timer in self.timers.values():
             timer.update()
-
-        for collider in self.colliders:
-            pygame.draw.rect(pygame.display.get_surface(), (255, 0, 0), collider.rect, 2)
 
         self.old_rect = self.hitbox.copy()

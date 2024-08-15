@@ -18,9 +18,6 @@ class Game:
 
         level = open("assets/maps/room1.json")
         self.level = json.load(level)
-        self.background = pygame.image.load("assets/maps/room1.png")
-        self.background = pygame.transform.scale(self.background, (self.background.get_width() * SCALE,
-                                                                   self.background.get_height() * SCALE))
 
         self.room = Level(self.level, self.all_sprites)
 
@@ -38,10 +35,8 @@ class Game:
 
             self.screen.fill((0, 0, 0))
 
-            self.screen.blit(self.background, (0, 0))
-
-            self.all_sprites.update(dt, self.level.player)
-            self.all_sprites.draw(self.screen)
+            self.all_sprites.update(dt, self.room.player, self.room.colliders)
+            self.all_sprites.custom_draw(self.screen)
 
             pygame.display.update()
 
